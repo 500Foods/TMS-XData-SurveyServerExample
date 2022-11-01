@@ -3,18 +3,32 @@ unit Unit2;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
-  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  Vcl.StdCtrls, Unit1;
+  Winapi.Windows,
+  Winapi.Messages,
+  Winapi.Shellapi,
+
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  Vcl.StdCtrls,
+
+  Unit1;
 
 type
   TMainForm = class(TForm)
     mmInfo: TMemo;
     btStart: TButton;
     btStop: TButton;
+    btSwagger: TButton;
     procedure btStartClick(ASender: TObject);
     procedure btStopClick(ASender: TObject);
     procedure FormCreate(ASender: TObject);
+    procedure btSwaggerClick(Sender: TObject);
   strict private
     procedure UpdateGUI;
   end;
@@ -44,22 +58,28 @@ begin
   UpdateGUI;
 end;
 
+procedure TMainForm.btSwaggerClick(Sender: TObject);
+var
+  url: String;
+begin
+  url := ServerContainer.SWAG_URL;
+  ShellExecute(0, 'open', PChar(url), nil, nil, SW_SHOWNORMAL);
+end;
+
 procedure TMainForm.FormCreate(ASender: TObject);
 begin
+  Caption := Application.Title;
+
   UpdateGUI;
+
 end;
 
 procedure TMainForm.UpdateGUI;
-const
-  cHttp = 'http://+';
-  cHttpLocalhost = 'http://localhost';
 begin
   btStart.Enabled := not ServerContainer.SparkleHttpSysDispatcher.Active;
   btStop.Enabled := not btStart.Enabled;
   if ServerContainer.SparkleHttpSysDispatcher.Active then
-    mmInfo.Lines.Add(SServerStartedAt + StringReplace(
-      ServerContainer.XDataServer.BaseUrl,
-      cHttp, cHttpLocalhost, [rfIgnoreCase]))
+    mmInfo.Lines.Add(SServerStartedAt + ServerContainer.REST_URL)
   else
     mmInfo.Lines.Add(SServerStopped);
 end;
