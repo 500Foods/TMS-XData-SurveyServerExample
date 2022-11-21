@@ -12,9 +12,9 @@ type
   ISurveyAdminService = interface(IInvokable)
     ['{18375DB7-2E25-4688-B286-270FA7417C89}']
 
-    function Login(Email: string; Password: string):string;
-
     // The default is [HttpPost]
+
+    function Login(Email: string; Password: string; ClientVersion: string; ClientRelease: string):string;
 
     [Authorize] function GetSurveys: TStream;
     [Authorize] function GetSurveyByID(SID: String; SurveyName: String; SurveyGroup: String): TStream;
@@ -52,6 +52,7 @@ type
     [Authorize] function GetAllResponses: TStream;
 
     [Authorize] function GetHistory(Days: Integer): TStream;
+    [Authorize] function GetHistoryRange(Start: String; Finish:String): TStream;
 
   end;
 

@@ -36,7 +36,7 @@ type
   TSurveyAdminService = class(TInterfacedObject, ISurveyAdminService)
   private
 
-    function Login(Email: string; Password: string):string;
+    function Login(Email: string; Password: string; ClientVersion: string; ClientRelease: string):string;
 
     function GetSurveys: TStream;
     function GetSurveyByID(SID: String; SurveyName: String; SurveyGroup: String): TStream;
@@ -74,6 +74,7 @@ type
     function GetAllResponses: TStream;
 
     function GetHistory(Days: Integer): TStream;
+    function GetHistoryRange(Start: String; Finish:String): TStream;
 
   end;
 
@@ -106,7 +107,14 @@ begin
   Support.ConnectQuery(fdc, qry);
 
   // Record what we're up to
-  Support.LogHistory(qry, usr.Claims.Find('account').AsString, SID, 'AddSurveyNote [ '+SurveyGroup+'/'+SurveyName+' ]');
+  Support.LogHistory (
+    qry,
+    usr.Claims.Find('account').AsString,
+    usr.Claims.Find('client_version').AsString,
+    usr.Claims.Find('client_release').AsString,
+    SID,
+    'AddSurveyNote'
+  );
 
   // Populate query: notes (insert)
   with qry do
@@ -174,7 +182,14 @@ begin
   Support.ConnectQuery(fdc, qry);
 
   // Record what we're up to
-  Support.LogHistory(qry, usr.Claims.Find('account').AsString, '', 'DeleteAccount [ '+FirstName+' '+LastName+' ]');
+  Support.LogHistory(
+    qry,
+    usr.Claims.Find('account').AsString,
+    usr.Claims.Find('client_version').AsString,
+    usr.Claims.Find('client_release').AsString,
+    '',
+    'DeleteAccount [ '+FirstName+' '+LastName+' ]'
+  );
 
   // Populate query: accounts (delete)
   with qry do
@@ -204,7 +219,8 @@ begin
     SQL.Add('                                  from  issues');
     SQL.Add('                                 where  resolution <> "Closed"');
     SQL.Add('                              group by  account_id) as accountissues');
-    SQL.Add('             on accounts.account_id = accountissues.account_id;');
+    SQL.Add('               on accounts.account_id = accountissues.account_id');
+    SQL.Add(' order by  first_name, last_name;');
   end;
 
   // Return query as JSON stream
@@ -241,7 +257,14 @@ begin
   Support.ConnectQuery(fdc, qry);
 
   // Record what we're up to
-  Support.LogHistory(qry, usr.Claims.Find('account').AsString, SID, 'DeleteSurvey [ '+SurveyGroup+'/'+SurveyName+' ]');
+  Support.LogHistory(
+    qry,
+    usr.Claims.Find('account').AsString,
+    usr.Claims.Find('client_version').AsString,
+    usr.Claims.Find('client_release').AsString,
+    SID,
+    'DeleteSurvey'
+  );
 
   // Populate query: surveys (delete)
   with qry do
@@ -347,7 +370,14 @@ begin
   Support.ConnectQuery(fdc, qry);
 
   // Record what we're up to
-  Support.LogHistory(qry, usr.Claims.Find('account').AsString, SID, 'DeleteSurveyNote [ '+SurveyGroup+'/'+SurveyName+' ]');
+  Support.LogHistory(
+    qry,
+    usr.Claims.Find('account').AsString,
+    usr.Claims.Find('client_version').AsString,
+    usr.Claims.Find('client_release').AsString,
+    SID,
+    'DeleteSurveyNote'
+  );
 
   // Populate query: notes (delete)
   with qry do
@@ -412,7 +442,14 @@ begin
   Support.ConnectQuery(fdc, qry);
 
   // Record what we're up to
-  Support.LogHistory(qry, usr.Claims.Find('account').AsString, '', 'GetAccounts');
+  Support.LogHistory(
+    qry,
+    usr.Claims.Find('account').AsString,
+    usr.Claims.Find('client_version').AsString,
+    usr.Claims.Find('client_release').AsString,
+    '',
+    'GetAccounts'
+  );
 
   // Populate query: accounts, issues (select)
   with qry do
@@ -424,7 +461,8 @@ begin
     SQL.Add('                                  from  issues');
     SQL.Add('                                 where  resolution <> "Closed"');
     SQL.Add('                              group by  account_id) as accountissues');
-    SQL.Add('             on accounts.account_id = accountissues.account_id;');
+    SQL.Add('             on accounts.account_id = accountissues.account_id');
+    SQL.Add(' order by  first_name, last_name;');
   end;
   qry.Open;
 
@@ -462,7 +500,14 @@ begin
   Support.ConnectQuery(fdc, qry);
 
   // Record what we're up to
-  Support.LogHistory(qry, usr.Claims.Find('account').AsString, '', 'GetAllIssues');
+  Support.LogHistory(
+    qry,
+    usr.Claims.Find('account').AsString,
+    usr.Claims.Find('client_version').AsString,
+    usr.Claims.Find('client_release').AsString,
+    '',
+    'GetAllFeedback'
+  );
 
   // Populate query: accounts, issues (select)
   with qry do
@@ -471,7 +516,8 @@ begin
     SQL.Add('   select  feedback.utc_stamp, feedback_id, feedback.survey_id, stage, feedback, resolution, activitylog_size, coalesce(survey_name, "Missing Name") survey_name, coalesce(survey_group,"Missing Group") survey_group');
     SQL.Add('     from  feedback');
     SQL.Add('             left outer join surveys');
-    SQL.Add('               on feedback.survey_id = surveys.survey_id;');
+    SQL.Add('               on feedback.survey_id = surveys.survey_id');
+    SQL.Add(' order by  feedback.utc_stamp desc;');
   end;
   qry.Open;
 
@@ -508,7 +554,14 @@ begin
   Support.ConnectQuery(fdc, qry);
 
   // Record what we're up to
-  Support.LogHistory(qry, usr.Claims.Find('account').AsString, '', 'GetAllIssues');
+  Support.LogHistory(
+    qry,
+    usr.Claims.Find('account').AsString,
+    usr.Claims.Find('client_version').AsString,
+    usr.Claims.Find('client_release').AsString,
+    '',
+    'GetAllIssues'
+  );
 
   // Populate query: accounts, issues (select)
   with qry do
@@ -519,7 +572,8 @@ begin
     SQL.Add('             left outer join accounts');
     SQL.Add('               on issues.account_id = accounts.account_id');
     SQL.Add('             left outer join surveys');
-    SQL.Add('               on issues.survey_id = surveys.survey_id;');
+    SQL.Add('               on issues.survey_id = surveys.survey_id');
+    SQL.Add(' order by  issues.utc_stamp desc;');
   end;
   qry.Open;
 
@@ -543,6 +597,7 @@ var
   NewResponse: TJSONObject;
 
   SID,
+  SIP,
   SName,
   SGroup,
   STime,
@@ -550,6 +605,7 @@ var
 
   Final: String;
   i: integer;
+  RecordID: Integer;
 begin
 
   // Got a usable JWT?
@@ -570,16 +626,24 @@ begin
   Support.ConnectQuery(fdc, qry);
 
   // Record what we're up to
-  Support.LogHistory(qry, usr.Claims.Find('account').AsString, '', 'GetAllResponses');
+  Support.LogHistory(
+    qry,
+    usr.Claims.Find('account').AsString,
+    usr.Claims.Find('client_version').AsString,
+    usr.Claims.Find('client_release').AsString,
+    '',
+    'GetAllResponses'
+  );
 
   // Populate query: responses, surveys (select)
   with qry do
   begin
     SQL.Clear;
-    SQL.Add('   select  utc_stamp, responses.survey_id, client_id, response, survey_name, survey_group');
+    SQL.Add('   select  utc_stamp, responses.survey_id, client_id, response, survey_name, survey_group, ipaddr');
     SQL.Add('     from  responses');
     SQL.Add('             left outer join surveys');
-    SQL.Add('               on responses.survey_id = surveys.survey_id;');
+    SQL.Add('               on responses.survey_id = surveys.survey_id');
+    SQL.Add(' order by  utc_stamp desc;');
   end;
   qry.Open;
 
@@ -589,15 +653,24 @@ begin
   // This could also be done on the client.
 
   Responses := TJSONArray.Create;
+  RecordID := 1;
 
   while not(qry.EOF) do
   begin
     SID := qry.FieldByName('survey_id').AsString;
+    SIP := qry.FieldByName('ipaddr').AsString;
     SGroup := qry.FieldByName('survey_group').AsString;
     SName := qry.FieldByName('survey_name').AsString;
     STime := qry.FieldByName('utc_stamp').AsString;
     SClient := qry.FieldByName('client_id').AsString;
-    Response := TJSONObject.ParseJSONValue(qry.FieldByName('response').AsString) as TJSONObject;
+    Response := TJSONObject.Create;
+    try
+      Response := TJSONObject.ParseJSONValue(qry.FieldByName('response').AsString) as TJSONObject;
+    except on E: Exception do
+      begin
+//        Response := TJSONObject.ParseJSONValue('{"Error:Error":"Invalid JSON found in Responses"}') as TJSONObject;
+      end;
+    end;
 
     i := 0;
     while (i < Response.Count) do
@@ -606,10 +679,12 @@ begin
       // the query name and survey name as part of the response so we don't have to go and look them up separately.
 
       NewResponse := TJSONObject.Create;
+      NewResponse.AddPair('ID',TJSONNumber.Create(RecordID));
       NewResponse.AddPair('SurveyID',SID);
       NewResponse.AddPair('SurveyGroup',SGroup);
       NewResponse.AddPair('SurveyName',SName);
       NewResponse.AddPair('SurveyTime',STime);
+      NewResponse.AddPair('SurveyIP',SIP);
       NewResponse.AddPair('SurveyClient',SClient);
       NewResponse.AddPair('Order', TJSONNumber.Create(i));
       NewResponse.AddPair('QuestionID', Copy(Response.Pairs[i].JSONString.Value, 1, Pos(':', Response.Pairs[i].JSONString.Value)-1));
@@ -623,10 +698,11 @@ begin
 
       Responses.Add(TJSONObject.ParseJSONValue(Final) as TJSONObject);
       i := i + 1;
+      RecordID := RecordID + 1;
     end;
 
     qry.Next;
-    Response.Free;
+    if Assigned(Response) then Response.Free;
   end;
 
   // Take the results and stream back to client
@@ -667,7 +743,14 @@ begin
   Support.ConnectQuery(fdc, qry);
 
   // Record what we're up to
-  Support.LogHistory(qry, usr.Claims.Find('account').AsString, '', 'GetFeedbackActivityLog');
+  Support.LogHistory(
+    qry,
+    usr.Claims.Find('account').AsString,
+    usr.Claims.Find('client_version').AsString,
+    usr.Claims.Find('client_release').AsString,
+    '',
+    'GetFeedbackActivityLog'
+  );
 
   // Populate query: feedback (select)
   with qry do
@@ -715,19 +798,92 @@ begin
   Support.ConnectQuery(fdc, qry);
 
   // Record what we're up to
-  Support.LogHistory(qry, usr.Claims.Find('account').AsString, '', 'GetHistory [ '+IntToStr(Days)+'d ]');
+  Support.LogHistory(
+    qry,
+    usr.Claims.Find('account').AsString,
+    usr.Claims.Find('client_version').AsString,
+    usr.Claims.Find('client_release').AsString,
+    '',
+    'GetHistory [ '+IntToStr(Days)+'d ]'
+  );
 
   // Populate query: history, accounts (select)
   with qry do
   begin
     SQL.Clear;
-    SQL.Add('   select  utc_stamp, ipaddr, history.account_id, first_name, last_name, email, survey_id, endpoint, ');
+    SQL.Add('   select  utc_stamp, ipaddr, history.account_id, first_name, last_name, email, history.survey_id, survey_name, survey_group, survey_link, endpoint, client_ver, client_rel, ');
     SQL.Add('           ROW_NUMBER () OVER ( ORDER BY utc_stamp desc ) ID');
-    SQL.Add('     from  history left outer join accounts');
-    SQL.Add('             on  history.account_id = accounts.account_id');
+    SQL.Add('     from  history ');
+    SQL.Add('             left outer join accounts');
+    SQL.Add('               on  history.account_id = accounts.account_id');
+    SQL.Add('             left outer join surveys');
+    SQL.Add('               on  history.survey_id = surveys.survey_id');
     SQL.Add('    where  utc_stamp > date("now","utc",:DAYS)');
     SQL.Add(' order by  utc_stamp desc;');
     ParamByName('DAYS').AsString := IntToStr(-Days)+' days';
+  end;
+  qry.Open;
+
+  // Return query as JSON stream
+  Support.FireDACtoSimpleJSON(qry, Result);
+
+  // Cleanup What We Created
+  Support.CleanupQuery(fdc, qry);
+
+end;
+
+function TSurveyAdminService.GetHistoryRange(Start, Finish: String): TStream;
+var
+  usr: IUserIdentity;
+  fdc: TFDConnection;
+  qry: TFDQuery;
+
+begin
+
+  // Got a usable JWT?
+  usr := TXDataOperationContext.Current.Request.User;
+  if (usr = nil) then raise EXDataHttpUnauthorized.Create('Failed authentication');
+  if not(usr.Claims.Exists('account')) then raise EXDataHttpUnauthorized.Create('Missing account');
+  if not(usr.Claims.Exists('security')) then raise EXDataHttpUnauthorized.Create('Missing credentials');
+
+  // Make sure this account has access to view history
+  if Copy(usr.Claims.Find('security').asString,5,1) <> 'W' then raise EXDataHttpUnauthorized.Create('Not Authorized: GetHistory');
+
+  // CRITICAL TODO: Check that the account has appropriate privileges for this operation
+
+  // Returning JSON
+  TXDataOperationContext.Current.Response.Headers.SetValue('content-type', 'application/json');
+  Result := TMemoryStream.Create;
+
+  // Create a query
+  Support.ConnectQuery(fdc, qry);
+
+  // Record what we're up to
+  Support.LogHistory(
+    qry,
+    usr.Claims.Find('account').AsString,
+    usr.Claims.Find('client_version').AsString,
+    usr.Claims.Find('client_release').AsString,
+    '',
+    'GetHistoryRange [ '+Start+'-'+Finish+' ]'
+  );
+
+  // Populate query: history, accounts (select)
+  with qry do
+  begin
+    SQL.Clear;
+    SQL.Add('   select  utc_stamp, ipaddr, history.account_id, first_name, last_name, email, history.survey_id, survey_name, survey_group, survey_link, endpoint, client_ver, client_rel, ');
+    SQL.Add('           ROW_NUMBER () OVER ( ORDER BY utc_stamp desc ) ID');
+    SQL.Add('     from  history ');
+    SQL.Add('             left outer join accounts');
+    SQL.Add('               on  history.account_id = accounts.account_id');
+    SQL.Add('             left outer join surveys');
+    SQL.Add('               on  history.survey_id = surveys.survey_id');
+    SQL.Add('    where  utc_stamp >= :STARTED');
+    SQL.Add('           and utc_stamp <= :FINISHED');
+    SQL.Add(' order by  utc_stamp desc;');
+    ParamByName('STARTED').AsString := Start+' 00:00:00';
+    ParamByName('FINISHED').AsString := Finish+' 23:59:59';
   end;
   qry.Open;
 
@@ -766,7 +922,14 @@ begin
   Support.ConnectQuery(fdc, qry);
 
   // Record what we're up to
-  Support.LogHistory(qry, usr.Claims.Find('account').AsString, '', 'GetIssueActivityLog');
+  Support.LogHistory(
+    qry,
+    usr.Claims.Find('account').AsString,
+    usr.Claims.Find('client_version').AsString,
+    usr.Claims.Find('client_release').AsString,
+    '',
+    'GetIssueActivityLog'
+  );
 
   // Populate query: issues (select)
   with qry do
@@ -814,7 +977,14 @@ begin
   Support.ConnectQuery(fdc, qry);
 
   // Record what we're up to
-  Support.LogHistory(qry, usr.Claims.Find('account').AsString, SID, 'GetQuestions');
+  Support.LogHistory(
+    qry,
+    usr.Claims.Find('account').AsString,
+    usr.Claims.Find('client_version').AsString,
+    usr.Claims.Find('client_release').AsString,
+    SID,
+    'GetQuestions'
+  );
 
   // Populate query: questions (select)
   with qry do
@@ -865,7 +1035,14 @@ begin
   Support.ConnectQuery(fdc, qry);
 
   // Record what we're up to
-  Support.LogHistory(qry, usr.Claims.Find('account').AsString, SID, 'GetSurveyByID [ '+SurveyGroup+'/'+SurveyName+' ]');
+  Support.LogHistory(
+    qry,
+    usr.Claims.Find('account').AsString,
+    usr.Claims.Find('client_version').AsString,
+    usr.Claims.Find('client_release').AsString,
+    SID,
+    'GetSurveyByID'
+  );
 
   // Populate query: surveys, permissions (select)
   with qry do
@@ -918,7 +1095,14 @@ begin
   Support.ConnectQuery(fdc, qry);
 
   // Record what we're up to
-  Support.LogHistory(qry, usr.Claims.Find('account').AsString, SID, 'GetSurveyChangeHistory [ '+SurveyGroup+'/'+SurveyName+' ]');
+  Support.LogHistory(
+    qry,
+    usr.Claims.Find('account').AsString,
+    usr.Claims.Find('client_version').AsString,
+    usr.Claims.Find('client_release').AsString,
+    SID,
+    'GetSurveyChangeHistory'
+  );
 
   // Populate query: changes, accounts, surveys (select)
   with qry do
@@ -951,7 +1135,8 @@ var
   qry: TFDQuery;
 
   SurveyInfo: TStringList;
-  SurveySize: Int64;
+  JSONData: TJSONArray;
+  JSONObject: TJSONObject;
 
 begin
 
@@ -973,22 +1158,61 @@ begin
   Support.ConnectQuery(fdc, qry);
 
   // Record what we're up to
-  Support.LogHistory(qry, usr.Claims.Find('account').AsString, SID, 'GetSurveyInfo [ '+SurveyGroup+'/'+SurveyName+' ]');
+  Support.LogHistory(
+    qry,
+    usr.Claims.Find('account').AsString,
+    usr.Claims.Find('client_version').AsString,
+    usr.Claims.Find('client_release').AsString,
+    SID,
+    'GetSurveyInfo'
+  );
+
+
 
   // Going to be generating a set of data to be returned, adding pieces to a list as we go
+  // The ID is used to set the display order that is seen in the Survey Admin Client.
   SurveyInfo := TStringList.Create;
+
+
 
   // Populate query: surveys (select)
   with qry do
   begin
     SQL.Clear;
-    SQL.Add('   select  survey_name, survey_group, survey');
+    SQL.Add('   select  survey_name, survey_group, survey_link, survey');
     SQL.Add('     from  surveys');
     SQL.Add('    where  survey_id = :SURVEYID');
     ParamByName('SURVEYID').AsString := SID;
   end;
   qry.Open;
-  SurveySize := Length(qry.FieldByName('survey').asString);
+
+  // Manually construct JSON to be returned
+  SurveyInfo.Add('{"ID":"01","KEY":"Survey ID","VALUE":"'+SID+'"},');
+  SurveyInfo.Add('{"ID":"02","KEY":"Survey Group","VALUE":"'+qry.FieldByName('survey_group').AsString+'"},');
+  SurveyInfo.Add('{"ID":"03","KEY":"Survey Name","VALUE":"'+qry.FieldByName('survey_name').AsString+'"},');
+  SurveyInfo.Add('{"ID":"04","KEY":"Survey Link","VALUE":"'+qry.FieldByName('survey_link').AsString+'"},');
+  SurveyInfo.Add('{"ID":"07","KEY":"Survey Setup Size (Bytes)","VALUE":"'+FloatToStrF(Length(qry.FieldByName('survey').asString),ffNumber,10,0)+'"},');
+
+  // Availability is stored as a JSON array, but as a string value for some reason, so we
+  // first need to get the string and then load it into a JSONArray variable to get the count
+  JSONObject := TJSONObject.ParseJSONValue(qry.FieldByName('survey').AsString) as TJSONObject;
+  JSONData := TJSONArray.Create;
+  if JSONObject.GetValue('Availability') <> nil then
+  begin
+    JSONData := TJSONObject.ParseJSONValue((JSONObject.GetValue('Availability') as TJSONString).Value) as TJSONArray;
+//    MainForm.mmInfo.Lines.Add(JSONData.tostring);
+    if Assigned(JSONData)
+    then SurveyInfo.Add('{"ID":"11","KEY":"Availability Count","VALUE":"'+IntToStr(JSONData.Count)+'"},')
+    else SurveyInfo.Add('{"ID":"12","KEY":"Availability Count","VALUE":"0"},');
+  end
+  else
+  begin
+    SurveyInfo.Add('{"ID":"12","KEY":"Availability Count","VALUE":"0"},');
+  end;
+  JSONObject.Free;
+  JSONData.Free;
+
+
 
   // Populate query: changes (select)
   with qry do
@@ -1002,12 +1226,64 @@ begin
   qry.Open;
 
   // Manually construct JSON to be returned
-  SurveyInfo.Add('{"ID":"1","KEY":"Survey First Created","VALUE":"'+FormatDateTime('yyyy-MMM-dd (ddd) HH:nn:ss', qry.FieldByName('created').AsDateTime)+'"},');
-  SurveyInfo.Add('{"ID":"2","KEY":"Survey Last Updated","VALUE":"'+FormatDateTime('yyyy-MMM-dd (ddd) HH:nn:ss', qry.FieldByName('updated').AsDateTime)+'"},');
-  SurveyInfo.Add('{"ID":"3","KEY":"Number of Updates","VALUE":"'+qry.FieldByName('numchanges').AsString+'"},');
-  SurveyInfo.Add('{"ID":"4","KEY":"Survey Size (Bytes)","VALUE":"'+IntToStr(SurveySize)+'"},');
+  SurveyInfo.Add('{"ID":"05","KEY":"Survey First Created","VALUE":"'+FormatDateTime('yyyy-MMM-dd (ddd) HH:nn:ss', qry.FieldByName('created').AsDateTime)+'"},');
+  SurveyInfo.Add('{"ID":"06","KEY":"Survey Last Updated","VALUE":"'+FormatDateTime('yyyy-MMM-dd (ddd) HH:nn:ss', qry.FieldByName('updated').AsDateTime)+'"},');
+  SurveyInfo.Add('{"ID":"14","KEY":"Change Count","VALUE":"'+qry.FieldByName('numchanges').AsString+'"},');
 
-  // Populate query: history (select)
+
+
+  // Populate query: questions (select)
+  with qry do
+  begin
+    SQL.Clear;
+    SQL.Add('   select  question_list');
+    SQL.Add('     from  questions');
+    SQL.Add('    where  survey_id = :SURVEYID');
+    ParamByName('SURVEYID').AsString := SID;
+  end;
+  qry.Open;
+
+  // Manually construct JSON to be returned
+  SurveyInfo.Add('{"ID":"08","KEY":"Survey Question Size (Bytes)","VALUE":"'+FloatToStrF(Length(qry.FieldByName('question_list').asString),ffNumber,10,0)+'"},');
+  JSONData := TJSONObject.ParseJSONValue(qry.FieldByName('question_list').AsString) as TJSONArray;
+  SurveyInfo.Add('{"ID":"10","KEY":"Question Count","VALUE":"'+IntToStr(JSONData.Count)+'"},');
+  JSONData.Free;
+
+
+
+  // Populate query: permissions (select)
+  with qry do
+  begin
+    SQL.Clear;
+    SQL.Add('   select  count(*) num');
+    SQL.Add('     from  permissions');
+    SQL.Add('    where  survey_id = :SURVEYID');
+    ParamByName('SURVEYID').AsString := SID;
+  end;
+  qry.Open;
+
+  // Manually construct JSON to be returned
+  SurveyInfo.Add('{"ID":"09","KEY":"Adminstrator Count","VALUE":"'+qry.FieldByName('num').AsString+'"},');
+
+
+
+  // Populate query: notes (select)
+  with qry do
+  begin
+    SQL.Clear;
+    SQL.Add('   select  count(*) num');
+    SQL.Add('     from  notes');
+    SQL.Add('    where  survey_id = :SURVEYID');
+    ParamByName('SURVEYID').AsString := SID;
+  end;
+  qry.Open;
+
+  // Manually construct JSON to be returned
+  SurveyInfo.Add('{"ID":"13","KEY":"Notes Count","VALUE":"'+qry.FieldByName('num').AsString+'"},');
+
+
+
+   // Populate query: history (select)
   // Exclude Development IPs
   with qry do
   begin
@@ -1020,7 +1296,11 @@ begin
     ParamByName('SURVEYID').AsString := SID;
   end;
   qry.Open;
-  SurveyInfo.Add('{"ID":"5","KEY":"Unique Visitors (By IP)","VALUE":"'+qry.FieldByName('num').AsString+'"},');
+
+  // Manually construct JSON to be returned
+  SurveyInfo.Add('{"ID":"15","KEY":"Unique Visitors (By IP)","VALUE":"'+qry.FieldByName('num').AsString+'"},');
+
+
 
   // Populate query: history (select)
   // Exclude Development IPs
@@ -1035,19 +1315,11 @@ begin
     ParamByName('SURVEYID').AsString := SID;
   end;
   qry.Open;
-  SurveyInfo.Add('{"ID":"6","KEY":"Unique Visitors (By ID)","VALUE":"'+qry.FieldByName('num').AsString+'"},');
 
-  // Populate query: questions (select)
-  with qry do
-  begin
-    SQL.Clear;
-    SQL.Add('   select  count(*) num');
-    SQL.Add('     from  questions');
-    SQL.Add('    where  survey_id = :SURVEYID');
-    ParamByName('SURVEYID').AsString := SID;
-  end;
-  qry.Open;
-  SurveyInfo.Add('{"ID":"7","KEY":"Question Count","VALUE":"'+qry.FieldByName('num').AsString+'"},');
+  // Manually construct JSON to be returned
+  SurveyInfo.Add('{"ID":"16","KEY":"Unique Visitors (By ID)","VALUE":"'+qry.FieldByName('num').AsString+'"},');
+
+
 
   // Populate query: responses (select)
   with qry do
@@ -1059,7 +1331,11 @@ begin
     ParamByName('SURVEYID').AsString := SID;
   end;
   qry.Open;
-  SurveyInfo.Add('{"ID":"8","KEY":"Response Count","VALUE":"'+qry.FieldByName('num').AsString+'"},');
+
+  // Manually construct JSON to be returned
+  SurveyInfo.Add('{"ID":"17","KEY":"Response Count","VALUE":"'+qry.FieldByName('num').AsString+'"},');
+
+
 
   // Populate query: feedback (select)
   with qry do
@@ -1071,7 +1347,11 @@ begin
     ParamByName('SURVEYID').AsString := SID;
   end;
   qry.Open;
-  SurveyInfo.Add('{"ID":"9","KEY":"Feedback Count","VALUE":"'+qry.FieldByName('num').AsString+'"},');
+
+  // Manually construct JSON to be returned
+  SurveyInfo.Add('{"ID":"18","KEY":"Feedback Count","VALUE":"'+qry.FieldByName('num').AsString+'"},');
+
+
 
   // Populate query: issues (select)
   with qry do
@@ -1083,44 +1363,20 @@ begin
     ParamByName('SURVEYID').AsString := SID;
   end;
   qry.Open;
-  SurveyInfo.Add('{"ID":"10","KEY":"Issue Count","VALUE":"'+qry.FieldByName('num').AsString+'"},');
 
-  // Populate query: permissions (select)
-  with qry do
-  begin
-    SQL.Clear;
-    SQL.Add('   select  count(*) num');
-    SQL.Add('     from  permissions');
-    SQL.Add('    where  survey_id = :SURVEYID');
-    ParamByName('SURVEYID').AsString := SID;
-  end;
-  qry.Open;
-  SurveyInfo.Add('{"ID":"11","KEY":"Adminstrators","VALUE":"'+qry.FieldByName('num').AsString+'"},');
+  // Manually construct JSON to be returned
+  SurveyInfo.Add('{"ID":"19","KEY":"Issue Count","VALUE":"'+qry.FieldByName('num').AsString+'"},');
 
-  // Populate query: notes (select)
-  with qry do
-  begin
-    SQL.Clear;
-    SQL.Add('   select  count(*) num');
-    SQL.Add('     from  notes');
-    SQL.Add('    where  survey_id = :SURVEYID');
-    ParamByName('SURVEYID').AsString := SID;
-  end;
-  qry.Open;
-  SurveyInfo.Add('{"ID":"12","KEY":"Notes","VALUE":"'+qry.FieldByName('num').AsString+'"},');
 
-  // Populate query: changes (select)
-  with qry do
-  begin
-    SQL.Clear;
-    SQL.Add('   select  count(*) num');
-    SQL.Add('     from  changes');
-    SQL.Add('    where  survey_id = :SURVEYID');
-    ParamByName('SURVEYID').AsString := SID;
-  end;
-  qry.Open;
 
-  SurveyInfo.Add('{"ID":"13","KEY":"Changes","VALUE":"'+qry.FieldByName('num').AsString+'"}');
+  // Manually construct JSON to be returned
+  SurveyInfo.Add('{"ID":"94","KEY":"Server Name","VALUE":"'+ServerContainer.AppName+'"},');
+  SurveyInfo.Add('{"ID":"95","KEY":"Server Version","VALUE":"'+ServerContainer.AppVersionShort+'"},');
+  SurveyInfo.Add('{"ID":"96","KEY":"Server Release","VALUE":"'+ServerContainer.AppRelease+'"}');
+
+
+
+
 
   // Return query as JSON stream
   Result := TStringStream.Create('['+SurveyInfo.Text+']');
@@ -1156,7 +1412,14 @@ begin
   Support.ConnectQuery(fdc, qry);
 
   // Record what we're up to
-  Support.LogHistory(qry, usr.Claims.Find('account').AsString, SID, 'GetSurveyNotes [ '+SurveyGroup+'/'+SurveyName+' ]');
+  Support.LogHistory(
+    qry,
+    usr.Claims.Find('account').AsString,
+    usr.Claims.Find('client_version').AsString,
+    usr.Claims.Find('client_release').AsString,
+    SID,
+    'GetSurveyNotes'
+  );
 
   // Populate query: notes, accounts, surveys (select)
   with qry do
@@ -1209,7 +1472,14 @@ begin
   Support.ConnectQuery(fdc, qry);
 
   // Record what we're up to
-  Support.LogHistory(qry, usr.Claims.Find('account').AsString, SID, 'GetSurveyPermissions [ '+SurveyGroup+'/'+SurveyName+' ]');
+  Support.LogHistory(
+    qry,
+    usr.Claims.Find('account').AsString,
+    usr.Claims.Find('client_version').AsString,
+    usr.Claims.Find('client_release').AsString,
+    SID,
+    'GetSurveyPermissions'
+  );
 
   // Populate query: accounts, permissions (select)
   with qry do
@@ -1220,7 +1490,8 @@ begin
     SQL.Add('             left outer join ( select  account_id, permissions');
     SQL.Add('                                 from  permissions');
     SQL.Add('                                where  permissions.survey_id = :SID ) perms');
-    SQL.Add('               on accounts.account_id = perms.account_id;');
+    SQL.Add('               on accounts.account_id = perms.account_id');
+    SQL.Add(' order by  first_name, last_name;');
     ParamByName('SID').AsString := SID;
   end;
   qry.Open;
@@ -1259,7 +1530,14 @@ begin
   Support.ConnectQuery(fdc, qry);
 
   // Record what we're up to
-  Support.LogHistory(qry, usr.Claims.Find('account').AsString, '', 'GetSurveys');
+  Support.LogHistory(
+    qry,
+    usr.Claims.Find('account').AsString,
+    usr.Claims.Find('client_version').AsString,
+    usr.Claims.Find('client_release').AsString,
+    '',
+    'GetSurveys'
+  );
 
   // Populate query: surveys, permissions (select)
   with qry do
@@ -1282,7 +1560,7 @@ begin
 
 end;
 
-function TSurveyAdminService.Login(Email, Password: string): string;
+function TSurveyAdminService.Login(Email, Password: string; ClientVersion: String; ClientRelease: String): string;
 var
   fdc: TFDConnection;
   qry: TFDQuery;
@@ -1338,12 +1616,21 @@ begin
         JWT.Claims.SetClaimOfType<string>( 'first', qry.FieldByName('first_name').asString );
         JWT.Claims.SetClaimOfType<string>( 'last', qry.FieldByName('last_name').asString );
         JWT.Claims.SetClaimOfType<string>( 'issued', FormatDateTime('yyyy-mm-dd hh:nn:ss.zzz', Now));
+        JWT.Claims.SetClaimOfType<string>( 'client_version', ClientVersion );
+        JWT.Claims.SetClaimOfType<string>( 'client_release', ClientRelease );
 
         // Generate the actual JWT
         Result := 'Bearer '+TJOSE.SHA256CompactToken(ServerContainer.XDataServerJWT.Secret, JWT);
 
         // Record what we're up to
-        Support.LogHistory(qry, account, '', 'Login [ Successful ]');
+        Support.LogHistory(
+          qry,
+          account,
+          ClientVersion,
+          ClientRelease,
+          '',
+          'Login [ Successful ]'
+        );
 
       finally
         JWT.Free;
@@ -1355,7 +1642,14 @@ begin
       Result := 'Incorrect E-Mail / Password';
 
       // Record what we're up to
-      Support.LogHistory(qry, account, '', 'Login [ Failed: Password ]');
+      Support.LogHistory(
+        qry,
+        account,
+        ClientVersion,
+        ClientRelease,
+        '',
+        'Login [ Failed: Password ]'
+      );
 
       // Send this back
       raise EXDataHttpUnauthorized.Create('Incorrect E-Mail / Password');
@@ -1370,7 +1664,14 @@ begin
     Result := 'Incorrect E-Mail / Password';
 
     // Record what we're up to
-    Support.LogHistory(qry, EMail, '', 'Login [ Failed: Account ]');
+    Support.LogHistory(
+      qry,
+      email,
+      ClientVersion,
+      ClientRelease,
+      '',
+      'Login [ Failed: Account ]'
+    );
 
     // Send this back
     raise EXDataHttpUnauthorized.Create('Incorrect E-Mail / Password')
@@ -1407,7 +1708,14 @@ begin
   Support.ConnectQuery(fdc, qry);
 
   // Record what we're up to
-  Support.LogHistory(qry, usr.Claims.Find('account').AsString, AccountID, 'NewAccount [ '+FirstName+' '+LastName+' ]');
+  Support.LogHistory(
+    qry,
+    usr.Claims.Find('account').AsString,
+    usr.Claims.Find('client_version').AsString,
+    usr.Claims.Find('client_release').AsString,
+    AccountID,
+    'NewAccount [ '+FirstName+' '+LastName+' ]'
+  );
 
   // Create password hash
   sha2 := TSHA2Hash.Create;
@@ -1450,7 +1758,8 @@ begin
     SQL.Add('                                  from  issues');
     SQL.Add('                                 where  resolution <> "Closed"');
     SQL.Add('                              group by  account_id) as accountissues');
-    SQL.Add('             on accounts.account_id = accountissues.account_id;');
+    SQL.Add('               on accounts.account_id = accountissues.account_id');
+    SQL.Add(' order by  first_name, last_name;');
   end;
 
   // Return query as JSON stream
@@ -1483,7 +1792,14 @@ begin
   Support.ConnectQuery(fdc, qry);
 
   // Record what we're up to
-  Support.LogHistory(qry, usr.Claims.Find('account').AsString, SID, 'NewSurvey [ '+SGROUP+' ]');
+  Support.LogHistory(
+    qry,
+    usr.Claims.Find('account').AsString,
+    usr.Claims.Find('client_version').AsString,
+    usr.Claims.Find('client_release').AsString,
+    SID,
+    'NewSurvey'
+  );
 
   // Populate query: surveys (insert)
   with qry do
@@ -1589,7 +1905,14 @@ begin
   Support.ConnectQuery(fdc, qry);
 
   // Record what we're up to
-  Support.LogHistory(qry, usr.Claims.Find('account').AsString, SID, 'ReportIssue [ '+Category+' ]');
+  Support.LogHistory(
+    qry,
+    usr.Claims.Find('account').AsString,
+    usr.Claims.Find('client_version').AsString,
+    usr.Claims.Find('client_release').AsString,
+    SID,
+    'ReportIssue [ '+Category+' ]'
+  );
 
   // Populate query: issues (insert)
   with qry do
@@ -1653,7 +1976,14 @@ begin
   Support.ConnectQuery(fdc, qry);
 
   // Record what we're up to
-  Support.LogHistory(qry, usr.Claims.Find('account').AsString, IssueID, 'SetIssueStatus [ '+Status+' ]');
+  Support.LogHistory(
+    qry,
+    usr.Claims.Find('account').AsString,
+    usr.Claims.Find('client_version').AsString,
+    usr.Claims.Find('client_release').AsString,
+    '',
+    'SetIssueStatus [ '+Status+' ]'
+  );
 
   // Populate query: issues (update)
   with qry do
@@ -1678,7 +2008,8 @@ begin
     SQL.Add('             left outer join accounts');
     SQL.Add('               on issues.account_id = accounts.account_id');
     SQL.Add('             left outer join surveys');
-    SQL.Add('               on issues.survey_id = surveys.survey_id;');
+    SQL.Add('               on issues.survey_id = surveys.survey_id');
+    SQL.Add(' order by  issues.utc_stamp desc;');
   end;
   qry.Open;
 
@@ -1720,7 +2051,14 @@ begin
   Support.ConnectQuery(fdc, qry);
 
   // Record what we're up to
-  Support.LogHistory(qry, usr.Claims.Find('account').AsString, '', 'SetPassword [ '+FirstName+' '+LastName+' ]');
+  Support.LogHistory(
+    qry,
+    usr.Claims.Find('account').AsString,
+    usr.Claims.Find('client_version').AsString,
+    usr.Claims.Find('client_release').AsString,
+    '',
+    'SetPassword [ '+FirstName+' '+LastName+' ]'
+  );
 
   // Get SHA-256 hash of password
   sha2 := TSHA2Hash.Create;
@@ -1760,7 +2098,8 @@ begin
     SQL.Add('                                  from  issues');
     SQL.Add('                                 where  resolution <> "Closed"');
     SQL.Add('                              group by  account_id) as accountissues');
-    SQL.Add('             on accounts.account_id = accountissues.account_id;');
+    SQL.Add('               on accounts.account_id = accountissues.account_id');
+    SQL.Add(' order by  first_name, last_name;');
   end;
   qry.Open;
 
@@ -1799,7 +2138,14 @@ begin
   Support.ConnectQuery(fdc, qry);
 
   // Record what we're up to
-  Support.LogHistory(qry, usr.Claims.Find('account').AsString, SID, 'SetQuestions');
+  Support.LogHistory(
+    qry,
+    usr.Claims.Find('account').AsString,
+    usr.Claims.Find('client_version').AsString,
+    usr.Claims.Find('client_release').AsString,
+    SID,
+    'SetQuestions'
+  );
 
   // Populate query: questions (update)
   with qry do
@@ -1879,7 +2225,14 @@ begin
   Support.ConnectQuery(fdc, qry);
 
   // Record what we're up to
-  Support.LogHistory(qry, usr.Claims.Find('account').AsString, SID, 'SetSurveyPermissions [ '+SurveyGroup+'/'+SurveyName+': '+FirstName+' '+LastName+' ]');
+  Support.LogHistory(
+    qry,
+    usr.Claims.Find('account').AsString,
+    usr.Claims.Find('client_version').AsString,
+    usr.Claims.Find('client_release').AsString,
+    SID,
+    'SetSurveyPermissions [ '+FirstName+' '+LastName+' ]'
+  );
 
   // Populate query: permissions (delete)
   with qry do
@@ -1923,7 +2276,8 @@ begin
     SQL.Add('             left outer join ( select  account_id, permissions');
     SQL.Add('                                 from  permissions');
     SQL.Add('                                where  permissions.survey_id = :SID ) perms');
-    SQL.Add('               on accounts.account_id = perms.account_id;');
+    SQL.Add('               on accounts.account_id = perms.account_id');
+    SQL.Add(' order by  first_name, last_name;');
     ParamByName('SID').AsString := SID;
   end;
   qry.Open;
@@ -1962,7 +2316,14 @@ begin
   Support.ConnectQuery(fdc, qry);
 
   // Record what we're up to
-  Support.LogHistory(qry, usr.Claims.Find('account').AsString, '', 'UpdateAccount [ '+FirstName+' '+LastName+' ]');
+  Support.LogHistory(
+    qry,
+    usr.Claims.Find('account').AsString,
+    usr.Claims.Find('client_version').AsString,
+    usr.Claims.Find('client_release').AsString,
+    '',
+    'UpdateAccount [ '+FirstName+' '+LastName+' ]'
+  );
 
   // Populate query: accounts (update)
   with qry do
@@ -1991,7 +2352,8 @@ begin
     SQL.Add('                                  from  issues');
     SQL.Add('                                 where  resolution <> "Closed"');
     SQL.Add('                              group by  account_id) as accountissues');
-    SQL.Add('             on accounts.account_id = accountissues.account_id;');
+    SQL.Add('               on accounts.account_id = accountissues.account_id');
+    SQL.Add(' order by  first_name, last_name;');
   end;
   qry.Open;
 
@@ -2028,7 +2390,14 @@ begin
   Support.ConnectQuery(fdc, qry);
 
   // Record what we're up to
-  Support.LogHistory(qry, usr.Claims.Find('account').AsString, SID, 'UpdateSurvey [ '+SurveyGroup+'/'+SurveyName+' ]');
+  Support.LogHistory(
+    qry,
+    usr.Claims.Find('account').AsString,
+    usr.Claims.Find('client_version').AsString,
+    usr.Claims.Find('client_release').AsString,
+    SID,
+    'UpdateSurvey'
+  );
 
   // Populate query: surveys (update)
   with qry do

@@ -68,7 +68,7 @@ end;
 
 procedure TMainForm.FormCreate(ASender: TObject);
 begin
-  Caption := Application.Title;
+  Caption := Application.Title+'     Ver '+ServerContainer.AppVersionShort+'     Rel '+Servercontainer.AppRelease;
 
   UpdateGUI;
 

@@ -23,7 +23,9 @@ object ServerContainer: TServerContainer
       Origin = '*'
     end
     object XDataServerJWT: TSparkleJwtMiddleware
-      Secret = 'ThisIsAReallyLongSecretToMeetTheXDataLengthRequirements'
+      Secret = 
+        'ThisIsAReallyLongSuperSecretSecretToMeetTheXDataLengthRequiremen' +
+        'ts'
     end
     object XDataServerCompress: TSparkleCompressMiddleware
     end

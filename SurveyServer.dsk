@@ -1,5 +1,5 @@
 ﻿[Closed Files]
-File_0=TSourceModule,'C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyClientServiceImplementation.pas',0,1,244,73,220,0,0,,
+File_0=TSourceModule,'C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\TZDB.pas',0,1,255,30,283,0,0,,
 File_1=TSourceModule,'C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-WEB-Core-SurveyClientExample\Unit1.pas',0,1,102,1,154,0,0,,
 File_2=TSourceModule,'C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-WEB-Core-LabelsExample\Unit1.pas',0,1,1,1,1,0,0,,
 File_3=TSourceModule,'C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-WEB-Core-LabelsExample\UnitLabelName.pas',0,1,81,27,110,0,0,,
@@ -12,34 +12,42 @@ File_9=TSourceModule,'C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projec
 
 [Modules]
 Module0=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyAdminServiceImplementation.pas
-Module1=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\Unit1.pas
-Module2=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyAdminService.pas
-Module3=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\UnitSupport.pas
-Module4=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyClientService.pas
+Module1=default.htm
+Module2=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyClientServiceImplementation.pas
+Module3=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\Unit1.pas
+Module4=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\UnitSupport.pas
 Module5=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\Unit2.pas
-Count=6
+Module6=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyAdminService.pas
+Module7=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyClientService.pas
+Count=8
 EditWindowCount=1
 
 [C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyAdminServiceImplementation.pas]
 ModuleType=TSourceModule
 
-[C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\Unit1.pas]
+[default.htm]
+ModuleType=TURLModule
+
+[C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyClientServiceImplementation.pas]
 ModuleType=TSourceModule
 
-[C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyAdminService.pas]
+[C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\Unit1.pas]
 ModuleType=TSourceModule
 
 [C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\UnitSupport.pas]
 ModuleType=TSourceModule
 
-[C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyClientService.pas]
-ModuleType=TSourceModule
-
 [C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\Unit2.pas]
 ModuleType=TSourceModule
 
+[C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyAdminService.pas]
+ModuleType=TSourceModule
+
+[C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyClientService.pas]
+ModuleType=TSourceModule
+
 [EditWindow0]
-ViewCount=6
+ViewCount=8
 CurrentEditView=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyAdminServiceImplementation.pas
 View0=0
 View1=1
@@ -47,6 +55,8 @@ View2=2
 View3=3
 View4=4
 View5=5
+View6=6
+View7=7
 PercentageSizes=1
 Create=1
 Visible=1
@@ -77,70 +87,85 @@ BottomMiddlePanelClients=DockSite0,GraphDrawingModel
 BottomMiddelPanelData=0000080001020200000009000000446F636B536974653010000000477261706844726177696E67566965779F1D00000000000002F206000000000000FFFFFFFF
 
 [View0]
+CustomEditViewType=TWelcomePageView
+WelcomePageURL=bds:/default.htm
+
+[View1]
 CustomEditViewType=TEditView
 Module=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\Unit1.pas
-CursorX=25
-CursorY=367
-TopLine=211
+CursorX=36
+CursorY=333
+TopLine=288
 LeftCol=1
 Elisions=
 Bookmarks=
 EditViewName=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\Unit1.pas
 
-[View1]
-CustomEditViewType=TEditView
-Module=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\Unit2.pas
-CursorX=26
-CursorY=65
-TopLine=37
-LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=Borland.FormDesignerView
-
 [View2]
-CustomEditViewType=TEditView
-Module=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\UnitSupport.pas
-CursorX=1
-CursorY=99
-TopLine=46
-LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\UnitSupport.pas
-
-[View3]
 CustomEditViewType=TEditView
 Module=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyAdminService.pas
 CursorX=1
-CursorY=18
+CursorY=56
 TopLine=1
 LeftCol=1
 Elisions=
 Bookmarks=
 EditViewName=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyAdminService.pas
 
-[View4]
+[View3]
 CustomEditViewType=TEditView
 Module=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyClientService.pas
-CursorX=42
-CursorY=15
+CursorX=70
+CursorY=21
 TopLine=1
 LeftCol=1
 Elisions=
 Bookmarks=
 EditViewName=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyClientService.pas
 
-[View5]
+[View4]
 CustomEditViewType=TEditView
 Module=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyAdminServiceImplementation.pas
 CursorX=1
-CursorY=550
-TopLine=538
+CursorY=682
+TopLine=670
 LeftCol=1
 Elisions=
 Bookmarks=
 EditViewName=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyAdminServiceImplementation.pas
+
+[View5]
+CustomEditViewType=TEditView
+Module=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\Unit2.pas
+CursorX=82
+CursorY=68
+TopLine=31
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\Unit2.pas
+
+[View6]
+CustomEditViewType=TEditView
+Module=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyClientServiceImplementation.pas
+CursorX=3
+CursorY=293
+TopLine=253
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyClientServiceImplementation.pas
+
+[View7]
+CustomEditViewType=TEditView
+Module=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\UnitSupport.pas
+CursorX=91
+CursorY=133
+TopLine=109
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\UnitSupport.pas
 
 [UndockedDesigner]
 Count=0
@@ -159,11 +184,11 @@ State=0
 Left=0
 Top=0
 Width=3823
-Height=1144
+Height=1154
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=3823
-ClientHeight=1144
+ClientHeight=1154
 TBDockHeight=212
 LRDockWidth=13604
 Dockable=1
@@ -199,14 +224,14 @@ Create=1
 Visible=1
 Docked=0
 State=2
-Left=146
-Top=269
-Width=8932
-Height=8519
+Left=0
+Top=0
+Width=10083
+Height=10154
 MaxLeft=-5
 MaxTop=-10
-MaxWidth=8932
-MaxHeight=8519
+MaxWidth=10083
+MaxHeight=10154
 ClientWidth=10021
 ClientHeight=9788
 BottomPanelSize=8963
@@ -282,8 +307,8 @@ Width=1786
 Height=6115
 MaxLeft=-5
 MaxTop=-10
-ClientWidth=1703
-ClientHeight=5740
+ClientWidth=1724
+ClientHeight=5750
 TBDockHeight=6115
 LRDockWidth=1786
 Dockable=1
@@ -318,11 +343,11 @@ State=0
 Left=0
 Top=0
 Width=2000
-Height=6740
+Height=8808
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=2000
-ClientHeight=6740
+ClientHeight=8808
 TBDockHeight=5962
 LRDockWidth=2510
 Dockable=1
@@ -359,11 +384,11 @@ State=0
 Left=0
 Top=0
 Width=3823
-Height=1144
+Height=1154
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=3823
-ClientHeight=1144
+ClientHeight=1154
 TBDockHeight=413
 LRDockWidth=4953
 Dockable=1
@@ -378,11 +403,11 @@ State=0
 Left=0
 Top=0
 Width=3823
-Height=1144
+Height=1154
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=3823
-ClientHeight=1144
+ClientHeight=1154
 TBDockHeight=212
 LRDockWidth=7406
 Dockable=1
@@ -401,11 +426,11 @@ State=0
 Left=0
 Top=0
 Width=3823
-Height=1144
+Height=1154
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=3823
-ClientHeight=1144
+ClientHeight=1154
 TBDockHeight=1538
 LRDockWidth=3484
 Dockable=1
@@ -420,11 +445,11 @@ State=0
 Left=0
 Top=0
 Width=3823
-Height=1144
+Height=1154
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=3823
-ClientHeight=1144
+ClientHeight=1154
 TBDockHeight=2067
 LRDockWidth=3484
 Dockable=1
@@ -458,11 +483,11 @@ State=0
 Left=0
 Top=0
 Width=2339
-Height=971
+Height=1212
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=2339
-ClientHeight=971
+ClientHeight=1212
 TBDockHeight=2317
 LRDockWidth=2823
 Dockable=1
@@ -523,11 +548,11 @@ State=0
 Left=0
 Top=0
 Width=2000
-Height=6740
+Height=8808
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=2000
-ClientHeight=6740
+ClientHeight=8808
 TBDockHeight=4885
 LRDockWidth=7151
 Dockable=1
@@ -618,11 +643,11 @@ State=0
 Left=0
 Top=0
 Width=3823
-Height=1144
+Height=1154
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=3823
-ClientHeight=1144
+ClientHeight=1154
 TBDockHeight=1548
 LRDockWidth=8740
 Dockable=1
@@ -663,11 +688,11 @@ State=0
 Left=0
 Top=0
 Width=2000
-Height=6740
+Height=8808
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=2000
-ClientHeight=6740
+ClientHeight=8808
 TBDockHeight=4885
 LRDockWidth=5307
 Dockable=1
@@ -730,12 +755,12 @@ State=0
 Left=0
 Top=24
 Width=3823
-Height=1413
+Height=1423
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=3823
-ClientHeight=1413
-TBDockHeight=1413
+ClientHeight=1423
+TBDockHeight=1423
 LRDockWidth=3823
 Dockable=1
 StayOnTop=0

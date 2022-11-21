@@ -8,7 +8,8 @@ uses
   SurveyAdminServiceImplementation in 'SurveyAdminServiceImplementation.pas',
   SurveyClientService in 'SurveyClientService.pas',
   SurveyClientServiceImplementation in 'SurveyClientServiceImplementation.pas',
-  UnitSupport in 'UnitSupport.pas' {Support: TDataModule};
+  UnitSupport in 'UnitSupport.pas' {Support: TDataModule},
+  TZDB in 'TZDB.pas';
 
 {$R *.res}
 

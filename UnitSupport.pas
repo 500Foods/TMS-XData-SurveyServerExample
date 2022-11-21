@@ -27,9 +27,9 @@ type
 
     procedure ConnectQuery(var conn: TFDConnection; var qry: TFDQuery);
     procedure CleanupQuery(var conn: TFDConnection; var qry: TFDQuery);
-    procedure LogHistory(qry: TFDQuery; account: string; survey: string; description: string);
     procedure FireDACtoSimpleJSON(qry: TFDQuery; JSON: TStream);
 
+    procedure LogHistory(qry: TFDQuery; account: string; client_version: string; client_release: string; survey: string; description: string);
   end;
 
 var
@@ -113,23 +113,27 @@ begin
   end;
 end;
 
-procedure TSupport.LogHistory(qry: TFDQuery; account: string; survey: string; description: string);
+procedure TSupport.LogHistory(qry: TFDQuery; account: string; client_version: string; client_release: string; survey: string; description: string);
 begin
   // Populate query: history (insert)
   with qry do
   begin
     SQL.Clear;
     SQL.Add('insert into history');
-    SQL.Add('  (utc_stamp, ipaddr, account_id, survey_id, endpoint)');
+    SQL.Add('  (utc_stamp, ipaddr, account_id, survey_id, endpoint, client_ver, client_rel)');
     SQL.Add('values(');
     SQL.Add('  current_timestamp,');
     SQL.Add('  :IPADDR,');
     SQL.Add('  :ACCOUNT,');
     SQL.Add('  :SID,');
-    SQL.Add('  :ENDPOINT');
+    SQL.Add('  :ENDPOINT,');
+    SQL.Add('  :CLIENTV,');
+    SQL.Add('  :CLIENTR');
     SQL.Add(');');
     ParamByName('IPADDR').AsString := TXDataOperationContext.Current.Request.RemoteIP;
     ParamByName('ACCOUNT').AsString := account;
+    ParamByName('CLIENTV').AsString := client_version;
+    ParamByName('CLIENTR').AsString := client_release;
     ParamByName('SID').AsString := survey;
     ParamByName('ENDPOINT').AsString := description;
   end;

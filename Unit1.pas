@@ -5,6 +5,7 @@ interface
 uses
   System.SysUtils,
   System.Classes,
+  System.JSON,
 
   Sparkle.Comp.HttpSysDispatcher,
   Sparkle.HttpServer.Module,
@@ -55,6 +56,8 @@ uses
   PsAPI,
   TlHelp32,
 
+  IdHTTP,
+
   MiscObj,
   HashObj;
 
@@ -71,18 +74,23 @@ type
     FDPhysSQLiteDriverLink1: TFDPhysSQLiteDriverLink;
     FDQuery1: TFDQuery;
     procedure DataModuleCreate(Sender: TObject);
+    function GetIP: String;
+    procedure GetVersionInfo;
   public
     REST_URL:string;
     SWAG_URL: string;
+    ServerIP: String;
+    AppVersionString: String;
+    AppVersionShort: String;
+    AppVersionLast: String;
+    ReleaseDate: TDateTime;
+    AppReleaseUTC: String;
+    AppRelease: String;
+    AppName: String;
   end;
 
 var
   ServerContainer: TServerContainer;
-  AppVersionString: String;
-  AppVersionShort: String;
-  AppVersionLast: String;
-  ReleaseDate: TDateTime;
-  AppRelease: String;
 
 
 implementation
@@ -91,7 +99,9 @@ implementation
 
 {$R *.dfm}
 
-procedure GetVersionInfo;
+uses TZDB;
+
+procedure TServerContainer.GetVersionInfo;
 var
   verblock: PVSFIXEDFILEINFO;
   versionMS: cardinal;
@@ -101,6 +111,7 @@ var
   m: TMemoryStream;
   p: pointer;
   s: cardinal;
+  localtimezone: TBundledTimeZone;
 begin
   // Adapted from https://stackoverflow.com/questions/1717844/how-to-determine-delphi-application-version
   m := TMemoryStream.Create;
@@ -138,6 +149,32 @@ begin
 
   FileAge(ParamStr(0), ReleaseDate);
   AppRelease := FormatDateTime('yyyy-MMM-dd', ReleaseDate);
+
+  localtimezone := TBundledTimeZone.create('America/Vancouver');
+  AppReleaseUTC := StringReplace(localtimezone.toISO8601Format(ReleaseDate),' ','T',[]);
+end;
+
+function TServerContainer.GetIP: String;
+var
+  IPInfo: TJSONObject;
+  IPAddr: string;
+  Server: TIdHttp;
+begin
+  IPAddr := '<unknown>';
+  Server := TIdHTTP.Create(nil);
+  try
+    IPAddr := Server.Get('http://ipinfo.io/json');
+    IPInfo := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes(IPAddr),0) as TJSONObject;
+    IPADdr := IPInfo.Get('ip').JSONValue.Value;
+    IPInfo.Free;
+    Server.Free;
+  except on E: Exception do
+    begin
+      IPAddr := '<exception>';
+    end;
+  end;
+
+  Result := IPAddr;
 end;
 
 procedure TServerContainer.DataModuleCreate(Sender: TObject);
@@ -170,6 +207,12 @@ begin
   XDataServer.Model.Description :=
     '### Overview'#13#10 +
     'This is the REST API for interacting with the Survey project.';
+
+
+  // A little bit of self-awareness is a good thing
+  GetVersionInfo;
+  SERVERIP := GetIP;
+  AppName := Application.Title;
 
 
   // FDConnection component dropped on form
@@ -240,7 +283,9 @@ begin
               'ipaddr varchar(50),'+
               'account_id varchar(38),'+
               'survey_id varchar(38),'+
-              'endpoint text'+
+              'endpoint text,'+
+              'client_ver text,'+                     // Added 2022-Nov-02
+              'client_rel text'+                      // Added 2022-Nov-02
             ');');
 
     SQL.Add('create table if not exists notes ('+
@@ -284,7 +329,8 @@ begin
               'utc_stamp text,'+
               'survey_id varchar(38),'+
               'client_id varchar(38),'+
-              'response text'+
+              'response text,'+
+              'ipaddr varchar(50)'+
             ');');
 
     // Not implmenented yet
@@ -330,36 +376,19 @@ begin
     with FDQuery1 do
     begin
       SQL.Clear;
-      SQL.Add('insert into history (utc_stamp, endpoint) values(current_timestamp, "'+Application.Title+' Database Created");');
+      SQL.Add('insert into history (utc_stamp, ipaddr, endpoint, account_id, client_ver, client_rel) values(current_timestamp, "'+ServerIP+'", "'+Application.Title+' Database Created", "'+Application.Title+'","'+AppVersionShort+'", "'+AppRelease+'");');
     end;
     FDQuery1.ExecSQL;
     sleep(1);
 
   end;
 
-  // Log server startup as a history event
-  GetVersionInfo;
 
+  // Log some information on server startup
   with FDQuery1 do
   begin
     SQL.Clear;
-    SQL.Add('insert into history (utc_stamp, endpoint) values(current_timestamp, "Release: '+AppRelease+'");');
-  end;
-  FDQuery1.ExecSQL;
-  sleep(1);
-
-  with FDQuery1 do
-  begin
-    SQL.Clear;
-    SQL.Add('insert into history (utc_stamp, endpoint) values(current_timestamp, "Version: '+AppVersionShort+'");');
-  end;
-  FDQuery1.ExecSQL;
-  sleep(1);
-
-  with FDQuery1 do
-  begin
-    SQL.Clear;
-    SQL.Add('insert into history (utc_stamp, endpoint) values(current_timestamp, "'+Application.Title+' Started");');
+    SQL.Add('insert into history (utc_stamp, ipaddr, endpoint, account_id, client_ver, client_rel) values(current_timestamp, "'+ServerIP+'", "'+Application.Title+' Started", "'+Application.Title+'","XS/'+AppVersionShort+'", "'+AppReleaseUTC+'");');
   end;
   FDQuery1.ExecSQL;
 

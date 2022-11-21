@@ -14,10 +14,10 @@ type
     // The default is [HttpPost]
     // These do not need to be authorized
 
-    function GetSurvey(SurveyLink: String; ClientID: String): TStream;
-    function GetQuestions(SurveyID: String; ClientID: String): TStream;
-    function SaveResponses(SurveyID: String; ClientID: String; Responses: String): TStream;
-    function Feedback(ClientID: String; SID: String; FeedbackID: String; Feedback: String; Stage: String; SurveyName: String; SurveyGroup: String; ActivityLog: String; ActivityLogSize: Integer): TStream;
+    function GetSurvey(SurveyLink, ClientID, ClientVersion, ClientRelease: String): TStream;
+    function GetQuestions(SurveyID, ClientID, ClientVersion, ClientRelease: String): TStream;
+    function SaveResponses(SurveyID, ClientID, clientVersion, ClientRlease, Responses, Question: String): TStream;
+    function Feedback(SurveyID, ClientID, ClientVersion, ClientRelease, FeedbackID, Feedback, Stage, ActivityLog: String): TStream;
 
   end;
 
