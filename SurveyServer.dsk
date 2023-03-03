@@ -11,10 +11,10 @@ File_8=TSourceModule,'C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projec
 File_9=TSourceModule,'C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-WEB-Core-TrackEditor\Unit1.pas',0,1,185,1,195,0,0,,
 
 [Modules]
-Module0=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyAdminServiceImplementation.pas
+Module0=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\Unit1.pas
 Module1=default.htm
-Module2=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyClientServiceImplementation.pas
-Module3=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\Unit1.pas
+Module2=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyAdminServiceImplementation.pas
+Module3=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyClientServiceImplementation.pas
 Module4=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\UnitSupport.pas
 Module5=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\Unit2.pas
 Module6=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyAdminService.pas
@@ -22,16 +22,16 @@ Module7=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-S
 Count=8
 EditWindowCount=1
 
-[C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyAdminServiceImplementation.pas]
+[C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\Unit1.pas]
 ModuleType=TSourceModule
 
 [default.htm]
 ModuleType=TURLModule
 
-[C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyClientServiceImplementation.pas]
+[C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyAdminServiceImplementation.pas]
 ModuleType=TSourceModule
 
-[C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\Unit1.pas]
+[C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyClientServiceImplementation.pas]
 ModuleType=TSourceModule
 
 [C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\UnitSupport.pas]
@@ -48,7 +48,7 @@ ModuleType=TSourceModule
 
 [EditWindow0]
 ViewCount=8
-CurrentEditView=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\SurveyAdminServiceImplementation.pas
+CurrentEditView=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\Unit1.pas
 View0=0
 View1=1
 View2=2
@@ -75,13 +75,13 @@ BorlandEditorCodeExplorer=BorlandEditorCodeExplorer@EditWindow0
 TopPanelSize=0
 LeftPanelSize=1896
 LeftPanelClients=PropertyInspector,DockSite3
-LeftPanelData=000008000101000000000D1000000000000001680700000000000001000000005C0E000009000000446F636B536974653301000000008A1C00001100000050726F7065727479496E73706563746F72FFFFFFFF
+LeftPanelData=00000800010100000000B21300000000000001680700000000000001000000005C0E000009000000446F636B53697465330100000000032300001100000050726F7065727479496E73706563746F72FFFFFFFF
 RightPanelSize=2000
 RightPanelClients=DockSite2,DockSite4
-RightPanelData=000008000101000000000D1000000000000001D00700000000000001000000004412000009000000446F636B536974653201000000008A1C000009000000446F636B5369746534FFFFFFFF
-BottomPanelSize=1583
-BottomPanelClients=DockSite1,MessageView
-BottomPanelData=0000080001020100000009000000446F636B5369746531DE44000000000000022F060000000000000100000000DE4400000F0000004D65737361676556696577466F726DFFFFFFFF
+RightPanelData=00000800010100000000B21300000000000001D00700000000000001000000004412000009000000446F636B536974653201000000000323000009000000446F636B5369746534FFFFFFFF
+BottomPanelSize=0
+BottomPanelClients=MessageView,DockSite1
+BottomPanelData=000008000102020000000F0000004D65737361676556696577466F726D09000000446F636B53697465311534000000000000022606000000000000FFFFFFFF
 BottomMiddlePanelSize=0
 BottomMiddlePanelClients=DockSite0,GraphDrawingModel
 BottomMiddelPanelData=0000080001020200000009000000446F636B536974653010000000477261706844726177696E67566965779F1D00000000000002F206000000000000FFFFFFFF
@@ -93,13 +93,13 @@ WelcomePageURL=bds:/default.htm
 [View1]
 CustomEditViewType=TEditView
 Module=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\Unit1.pas
-CursorX=36
-CursorY=333
+CursorX=96
+CursorY=310
 TopLine=288
 LeftCol=1
 Elisions=
 Bookmarks=
-EditViewName=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Projects\TMS-XData-SurveyServerExample\Unit1.pas
+EditViewName=Borland.FormDesignerView
 
 [View2]
 CustomEditViewType=TEditView
@@ -224,14 +224,14 @@ Create=1
 Visible=1
 Docked=0
 State=2
-Left=0
-Top=0
-Width=10083
-Height=10154
+Left=146
+Top=269
+Width=8932
+Height=8519
 MaxLeft=-5
 MaxTop=-10
-MaxWidth=10083
-MaxHeight=10154
+MaxWidth=8932
+MaxHeight=8519
 ClientWidth=10021
 ClientHeight=9788
 BottomPanelSize=8963
@@ -260,16 +260,16 @@ StayOnTop=0
 [MessageView]
 PercentageSizes=1
 Create=1
-Visible=1
+Visible=0
 Docked=1
 State=0
 Left=0
 Top=24
-Width=9917
+Width=2771
 Height=1413
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=9917
+ClientWidth=2771
 ClientHeight=1413
 TBDockHeight=1413
 LRDockWidth=2771
@@ -285,11 +285,11 @@ State=0
 Left=0
 Top=0
 Width=2000
-Height=2500
+Height=4221
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=2000
-ClientHeight=2500
+ClientHeight=4221
 TBDockHeight=7154
 LRDockWidth=2000
 Dockable=1
@@ -323,16 +323,21 @@ State=0
 Left=0
 Top=421
 Width=1896
-Height=3538
+Height=5260
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1896
-ClientHeight=3538
+ClientHeight=5260
 TBDockHeight=9077
 LRDockWidth=1896
 Dockable=1
 StayOnTop=0
-SplitPos=111
+SplitPos=143
+
+[PropInspDesignerSelection]
+ArrangeBy=Name
+SelectedItem=FormatOptions.FmtEditNumeric,CustomHint
+ExpandedItems=Font=0,LiveBindings=0,"LiveBindings Designer=0",Margins=0,Anchors=0,BorderIcons=0,HorzScrollBar=0,Padding=0,DesignData=0,VertScrollBar=0,ActiveStoredUsage=0,Connection=0,FetchOptions=0,FieldOptions=0,FilterChanges=0,FilterOptions=0,FormatOptions=1,FormatOptions.AssignedValues=0,FormatOptions.SortOptions=0
 
 [frmDesignPreview]
 PercentageSizes=1
@@ -752,7 +757,7 @@ Create=1
 Visible=0
 Docked=1
 State=0
-Left=0
+Left=952
 Top=24
 Width=3823
 Height=1423
@@ -827,11 +832,11 @@ State=0
 Left=0
 Top=529
 Width=2000
-Height=2500
+Height=4221
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=2000
-ClientHeight=2500
+ClientHeight=4221
 TBDockHeight=9077
 LRDockWidth=2000
 Dockable=1
