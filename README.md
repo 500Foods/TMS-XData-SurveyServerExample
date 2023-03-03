@@ -2,7 +2,7 @@
  Example of TMS XData server as REST API for survey example
  
 ## Usage Note: RandomDLL.DLL
-This DLL needs to be included in the same folder as the project executable. It is needed by the SHA-256 hash function that is used in several places, that, in turn, comes from the [TMS Cryptography Pack](https://www.tmssoftware.com/site/tmscrypto.asp).
+This DLL needs to be included in the same folder as the project executable. It is needed by the SHA-256 hash function that is used in several places, that, in turn, comes from the [TMS Cryptography Pack](https://www.tmssoftware.com/site/tmscrypto.asp). A post-build event has been added to the project to do this automatically.  This assumes that a Win64 project is being built.  Please adjust accordingly.
 
 ## Key Dependencies
 As with any modern application, other libraries/dependencies have been used in this project.
