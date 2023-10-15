@@ -9,5 +9,20 @@ As with any modern application, other libraries/dependencies have been used in t
 - [TMS XData](https://www.tmssoftware.com/site/tmswebcore.asp) - This is a TMS XData project, after all
 - [TMS Cryptography Pack](https://www.tmssoftware.com/site/tmscrypto.asp) - Supples the SHA-256 hash function
 
+## Repository Information
+[![Count Lines of Code](https://github.com/500Foods/TMS-XData-SurveyServerExample/actions/workflows/main.yml/badge.svg)](https://github.com/500Foods/TMS-XData-SurveyServerExample/actions/workflows/main.yml)
+```
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+Pascal                           9           1556           3791          10609
+Delphi Form                      3              1              0            123
+YAML                             2              4              8             15
+Markdown                         1              3              0             10
+-------------------------------------------------------------------------------
+SUM:                            15           1564           3799          10757
+-------------------------------------------------------------------------------
+```
+
 ## Sponsor / Donate / Support
 If you find this work interesting, helpful, or useful, or that it has sved you time, money, or both, please consider direclty supporting these efforts financially via [GitHub Sponsors](https://github.com/sponsors/500Foods) or donating via [Buy Me a Pizza](https://www.buymeacoffee.com/andrewsimard500). Also, be sure to check out these other [GitHub Repositories](https://github.com/500Foods?tab=repositories&q=&sort=stargazers) that may be of interest to you.
