@@ -1,5 +1,11 @@
 # TMS-XData-SurveyServerExample
- Example of TMS XData server as REST API for survey example
+This is a component of the [TMS WEB Core](https://www.tmssoftware.com/site/tmswebcore.asp) (Delphi web app) and [TMS XData](https://www.tmssoftware.com/site/xdata.asp) (Delphi REST API) project that implements a complete web-based survey app. The complete set includes the following.
+
+1. [Survey Server Example](https://github.com/500Foods/TMS-XData-SurveyServerExample) (REST API implemented with TMS XData)
+2. [Survey Admin Client](https://github.com/500Foods/TMS-Web-Core-SurveyAdminClient) (web app implemented with TMS WEB Core)
+3. [Survey Client Example](https://github.com/500Foods/TMS-WEB-Core-SurveyClientExample) (web app implemented with TMS WEB Core)
+
+The project first appeared as a mini-series on the [TMS Software Blog](https://www.tmssoftware.com/site/blog.asp). The first of the three parts is available [here](https://www.tmssoftware.com/site/tmswebcore.asp).
  
 ## Usage Note: RandomDLL.DLL
 This DLL needs to be included in the same folder as the project executable. It is needed by the SHA-256 hash function that is used in several places, that, in turn, comes from the [TMS Cryptography Pack](https://www.tmssoftware.com/site/tmscrypto.asp). A post-build event has been added to the project to do this automatically.  This assumes that a Win64 project is being built.  Please adjust accordingly.
