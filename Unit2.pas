@@ -25,10 +25,12 @@ type
     btStart: TButton;
     btStop: TButton;
     btSwagger: TButton;
+    btRedoc: TButton;
     procedure btStartClick(ASender: TObject);
     procedure btStopClick(ASender: TObject);
     procedure FormCreate(ASender: TObject);
     procedure btSwaggerClick(Sender: TObject);
+    procedure btRedocClick(Sender: TObject);
   strict private
     procedure UpdateGUI;
   end;
@@ -45,6 +47,14 @@ resourcestring
   SServerStartedAt = 'Server started at ';
 
 { TMainForm }
+
+procedure TMainForm.btRedocClick(Sender: TObject);
+var
+  url: String;
+begin
+  url := ServerContainer.REDOC_URL;
+  ShellExecute(0, 'open', PChar(url), nil, nil, SW_SHOWNORMAL);
+end;
 
 procedure TMainForm.btStartClick(ASender: TObject);
 begin

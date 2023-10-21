@@ -77,8 +77,9 @@ type
     function GetIP: String;
     procedure GetVersionInfo;
   public
-    REST_URL:string;
-    SWAG_URL: string;
+    REST_URL: String;
+    SWAG_URL: String;
+    REDOC_URL: String;
     ServerIP: String;
     AppVersionString: String;
     AppVersionShort: String;
@@ -189,12 +190,14 @@ begin
     XDataServer.BaseURL := 'http://+:2001/tms/xdata';
     REST_URL := 'http://localhost:2001/tms/data';
     SWAG_URL := 'http://localhost:2001/tms/xdata/swaggerui';
+    REDOC_URL := 'http://localhost:2001/tms/xdata/redoc';
   end
   else
   begin
     XDataServer.BaseURL := 'https://+:10101/500Surveys';
     REST_URL := 'https://carnival.500foods.com:10101/500Surveys';
     SWAG_URL := 'https://carnival.500foods.com:10101/500Surveys/swaggerui';
+    REDOC_URL := 'https://carnival.500foods.com:10101/500Surveys/redoc';
   end;
 
   // NOW we can start this
