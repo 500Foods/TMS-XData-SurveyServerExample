@@ -126,9 +126,9 @@
         <Debugger_RunParams>DEV</Debugger_RunParams>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <Icon_MainIcon>SurveyServer_Icon.ico</Icon_MainIcon>
-        <UWP_DelphiLogo44>Z:\Downloads\500surveys-1024x1024.png</UWP_DelphiLogo44>
-        <UWP_DelphiLogo150>Z:\Downloads\500surveys-1024x1024.png</UWP_DelphiLogo150>
+        <Icon_MainIcon>500Surveys-256.ico</Icon_MainIcon>
+        <UWP_DelphiLogo44>500Surveys-256.png</UWP_DelphiLogo44>
+        <UWP_DelphiLogo150>500Surveys-256.png</UWP_DelphiLogo150>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <VerInfo_Build>9</VerInfo_Build>
         <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.9;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
@@ -190,7 +190,7 @@ $(PostBuildEvent)]]></PostBuildEvent>
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
-                <DeployFile LocalName="Z:\Downloads\500surveys-1024x1024.png" Configuration="Release" Class="UWP_DelphiLogo44">
+                <DeployFile LocalName="500Surveys-256.png" Configuration="Release" Class="UWP_DelphiLogo44">
                     <Platform Name="Win64">
                         <RemoteDir>Assets\</RemoteDir>
                         <RemoteName>Logo44x44.png</RemoteName>
@@ -934,7 +934,7 @@ $(PostBuildEvent)]]></PostBuildEvent>
         <PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
         <PreLinkEvent/>
         <PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>
-        <PostBuildEvent>copy RandomDLL.dll &quot;$(OUTPUTDIR)&quot;</PostBuildEvent>
+        <PostBuildEvent>copy RandomDLL.dll &quot;$(OUTPUTDIR)&quot;</PostBuildEvent>
         <PostBuildEventIgnoreExitCode>False</PostBuildEventIgnoreExitCode>
     </PropertyGroup>
 </Project>
