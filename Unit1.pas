@@ -88,6 +88,7 @@ type
     AppReleaseUTC: String;
     AppRelease: String;
     AppName: String;
+    DatabaseName: String;
   end;
 
 var
@@ -182,6 +183,7 @@ procedure TServerContainer.DataModuleCreate(Sender: TObject);
 var
   sha2: TSHA2Hash;
   password: string;
+  i: Integer;
 begin
 
   // figure out whether we're operating in dev mode or production mode
@@ -223,11 +225,21 @@ begin
   // FDQuery component dropped on form
 
 
+  DatabaseName := 'SurveyData.sqlite';
+  i := 1;
+  while i <= ParamCount do
+  begin
+    if Pos('DBNAME=',Uppercase(ParamStr(i))) = 1
+    then DatabaseName := Copy(ParamStr(i),8,length(ParamStr(i)));
+
+    i := i + 1;
+  end;
+
   // This creates the database if it doesn't already exist
   FDManager.Open;
   FDConnection1.Params.Clear;
   FDConnection1.Params.DriverID := 'SQLite';
-  FDConnection1.Params.Database := 'SurveyData.sqlite';
+  FDConnection1.Params.Database := DatabaseName;
   FDConnection1.Params.Add('Synchronous=Full');
   FDConnection1.Params.Add('LockingMode=Normal');
   FDConnection1.Params.Add('SharedCache=False');

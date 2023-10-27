@@ -51,7 +51,7 @@ begin
     conn := TFDConnection.Create(nil);
     conn.Params.Clear;
     conn.Params.DriverID := 'SQLite';
-    conn.Params.Database := 'SurveyData.sqlite';
+    conn.Params.Database := ServerContainer.DatabaseName;
     conn.Params.Add('Synchronous=Full');
     conn.Params.Add('LockingMode=Normal');
     conn.Params.Add('SharedCache=False');
