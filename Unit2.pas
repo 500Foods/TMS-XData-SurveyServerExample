@@ -31,6 +31,7 @@ type
     procedure FormCreate(ASender: TObject);
     procedure btSwaggerClick(Sender: TObject);
     procedure btRedocClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   strict private
     procedure UpdateGUI;
   end;
@@ -82,6 +83,16 @@ begin
 
   UpdateGUI;
 
+end;
+
+procedure TMainForm.FormShow(Sender: TObject);
+begin
+  if MainForm.Tag = 0 then
+  begin
+    MainForm.Tag := 1;
+    MainForm.WindowState := wsMaximized;
+    MainForm.WindowState := wsMinimized;
+  end;
 end;
 
 procedure TMainForm.UpdateGUI;

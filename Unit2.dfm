@@ -13,6 +13,7 @@ object MainForm: TMainForm
   OldCreateOrder = False
   WindowState = wsMinimized
   OnCreate = FormCreate
+  OnShow = FormShow
   DesignSize = (
     472
     242)
