@@ -1370,9 +1370,9 @@ begin
 
 
   // Manually construct JSON to be returned
-  SurveyInfo.Add('{"ID":"94","KEY":"Server Name","VALUE":"'+ServerContainer.AppName+'"},');
-  SurveyInfo.Add('{"ID":"95","KEY":"Server Version","VALUE":"'+ServerContainer.AppVersionShort+'"},');
-  SurveyInfo.Add('{"ID":"96","KEY":"Server Release","VALUE":"'+ServerContainer.AppRelease+'"}');
+  SurveyInfo.Add('{"ID":"94","KEY":"Server Name","VALUE":"'+MainForm.AppName+'"},');
+  SurveyInfo.Add('{"ID":"95","KEY":"Server Version","VALUE":"'+MainForm.AppVersion+'"},');
+  SurveyInfo.Add('{"ID":"96","KEY":"Server Release","VALUE":"'+FormatDateTime('yyyy-mmm-dd',MainForm.AppRelease)+'"}');
 
 
 

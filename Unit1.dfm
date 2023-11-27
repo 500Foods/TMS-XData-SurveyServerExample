@@ -38,27 +38,4 @@ object ServerContainer: TServerContainer
     Left = 216
     Top = 128
   end
-  object FDConnection1: TFDConnection
-    Params.Strings = (
-      'SharedCache=False'
-      'LockingMode=Normal'
-      'JournalMode=WAL'
-      'StringFormat=Unicode'
-      
-        'Database=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Pro' +
-        'jects\TMS-XData-SurveyServerExample\Win64\Debug\SurveyData.sdb'
-      'Encrypt=aes-256'
-      'DriverID=SQLite')
-    Left = 352
-    Top = 64
-  end
-  object FDPhysSQLiteDriverLink1: TFDPhysSQLiteDriverLink
-    Left = 352
-    Top = 112
-  end
-  object FDQuery1: TFDQuery
-    Connection = FDConnection1
-    Left = 352
-    Top = 160
-  end
 end

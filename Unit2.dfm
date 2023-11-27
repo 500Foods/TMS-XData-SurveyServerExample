@@ -63,4 +63,48 @@ object MainForm: TMainForm
     TabOrder = 4
     OnClick = btRedocClick
   end
+  object btEMail: TButton
+    Left = 333
+    Top = 8
+    Width = 75
+    Height = 25
+    Caption = 'E-Mail'
+    TabOrder = 5
+    OnClick = btEMailClick
+  end
+  object tmrInit: TTimer
+    Enabled = False
+    OnTimer = tmrInitTimer
+    Left = 104
+    Top = 104
+  end
+  object tmrStart: TTimer
+    Enabled = False
+    OnTimer = tmrStartTimer
+    Left = 160
+    Top = 104
+  end
+  object DBConn: TFDConnection
+    Params.Strings = (
+      'SharedCache=False'
+      'LockingMode=Normal'
+      'JournalMode=WAL'
+      'StringFormat=Unicode'
+      
+        'Database=C:\Users\Andrew Simard\Documents\Embarcadero\Studio\Pro' +
+        'jects\TMS-XData-SurveyServerExample\Win64\Debug\SurveyData.sdb'
+      'Encrypt=aes-256'
+      'DriverID=SQLite')
+    Left = 352
+    Top = 64
+  end
+  object FDPhysSQLiteDriverLink1: TFDPhysSQLiteDriverLink
+    Left = 352
+    Top = 112
+  end
+  object Query1: TFDQuery
+    Connection = DBConn
+    Left = 352
+    Top = 160
+  end
 end
