@@ -129,8 +129,8 @@
         <UWP_DelphiLogo44>500Surveys-256.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>500Surveys-256.png</UWP_DelphiLogo150>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
-        <VerInfo_Build>11</VerInfo_Build>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.11;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Build>12</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.12;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <PostBuildEvent><![CDATA[copy RandomDLL.dll "$(OUTPUTDIR)"
 $(PostBuildEvent)]]></PostBuildEvent>
     </PropertyGroup>
@@ -189,9 +189,10 @@ $(PostBuildEvent)]]></PostBuildEvent>
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
-                <DeployFile LocalName="RandomDLL.dll" Configuration="Release" Class="ProjectFile">
+                <DeployFile LocalName="500Surveys-256.png" Configuration="Release" Class="UWP_DelphiLogo44">
                     <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
+                        <RemoteDir>Assets\</RemoteDir>
+                        <RemoteName>Logo44x44.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -207,16 +208,15 @@ $(PostBuildEvent)]]></PostBuildEvent>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Win64\Release\SurveyServer.exe" Configuration="Release" Class="ProjectOutput">
+                <DeployFile LocalName="RandomDLL.dll" Configuration="Release" Class="ProjectFile">
                     <Platform Name="Win64">
-                        <RemoteName>SurveyServer.exe</RemoteName>
+                        <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="500Surveys-256.png" Configuration="Release" Class="UWP_DelphiLogo44">
+                <DeployFile LocalName="Win64\Release\SurveyServer.exe" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Win64">
-                        <RemoteDir>Assets\</RemoteDir>
-                        <RemoteName>Logo44x44.png</RemoteName>
+                        <RemoteName>SurveyServer.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
